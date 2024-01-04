@@ -2,10 +2,12 @@
 
 // Libraries Used in Cli
 import figlet from 'figlet';
+import inquirer from 'inquirer';
 import { program } from 'commander';
-import { TapperInfo } from "./utils/tapper.info";
-import {TapperCommandsManager} from "./utils/tapper.commands.manager";
-import { TapperCommandsExecutionManager } from "./tapper.commands.execution.manager";
+import { TapperInfo } from "./utils/tapper.info.js";
+import { TapperCommandsManager } from "./utils/tapper.commands.manager.js";
+import { TapperCommandsExecutionManager } from "./tapper.commands.execution.manager.js";
+
 
 // Start Tapper Initialization in Terminal
 console.log("==========================================================")
@@ -45,9 +47,42 @@ for (let optionIndex = 0; optionIndex < cliOptions.length; optionIndex++) {
             }
         }
 
+        if (option.options != undefined) {
+            for (let optionArgument = 0; optionArgument < option.options.length; optionArgument++) {
+                const argumentToShow = option.options[optionArgument];
+                if (argumentToShow) {
+                    commandInstance.option(argumentToShow.name, argumentToShow.description)
+                }
+            }
+        }
+
         commandInstance.action((str, options) => {
-            console.log("Action: " + option.command + " : Options: " + options);
+            onCommandClick(option.command, options);
         })
+    }
+}
+
+/**
+ * Each Option has its Own Action Listener when The CLI Started by Arguments or Picking one Option of the Dropdown List
+ * @param command - command To be Executed
+ * @param options - Some Commands has Options and Arguments, Need to Pass them to Command Parser
+ */
+function onCommandClick(command: string, options: any) {
+    switch (command) {
+        case TapperCommandsManager.HELP_COMMAND:
+            TapperCommandsExecutionManager.onExecuteCommand(TapperCommandsManager.HELP_COMMAND);
+            break
+        case TapperCommandsManager.VIEW_DEVELOPER_OPTIONS_COMMAND:
+            TapperCommandsExecutionManager.onExecuteCommand(TapperCommandsManager.VIEW_DEVELOPER_OPTIONS_COMMAND);
+            break
+        case TapperCommandsManager.VIEW_TESTING_OPTIONS_COMMAND:
+            TapperCommandsExecutionManager.onExecuteCommand(TapperCommandsManager.VIEW_TESTING_OPTIONS_COMMAND);
+            break
+        case TapperCommandsManager.VALIDATE_ADB_INSTALLATION_COMMAND:
+            TapperCommandsExecutionManager.onExecuteCommand(TapperCommandsManager.VALIDATE_ADB_INSTALLATION_COMMAND);
+            break
+        default:
+            TapperCommandsExecutionManager.onExecuteCommandWithAttributes(command, options);
     }
 }
 
@@ -56,4 +91,37 @@ for (let optionIndex = 0; optionIndex < cliOptions.length; optionIndex++) {
 const options = program.opts();
 console.log("CLI Started With the Following Commands : " + options);
 
-program.parse(process.argv);
+// Show Dropdown Options
+async function onStartDropDownOptionsList() {
+    console.log("")
+    console.log("To Start Using Tapper Select one of the Following Options")
+    const options: Array<string> = [];
+    const commandsList = TapperCommandsManager.getDropdownOptionsList();
+    for (let index = 0; index < commandsList.length; index++) {
+        const command = commandsList[index];
+        if (command) {
+            options.push(command.name);
+        }
+    }
+
+
+    const question = {
+        type: 'list',
+        name: 'selectedOption',
+        message: 'Please select an Command To Start:',
+        choices: options,
+    };
+
+    const answers = await inquirer.prompt([question]);
+    const selectedCommand = commandsList[answers.selectedOption];
+    if (selectedCommand) {
+        TapperCommandsExecutionManager.onExecuteCommand(selectedCommand.command);
+    }
+}
+
+const isCliStartedWithArguments = process.argv != undefined && process.argv.length > 2
+if (isCliStartedWithArguments) {
+    program.parse(process.argv);
+} else {
+    onStartDropDownOptionsList();
+}

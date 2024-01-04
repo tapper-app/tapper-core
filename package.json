@@ -14,6 +14,7 @@
   "bin": {
     "tapper": "./dist/index.js"
   },
+  "type": "module",
   "keywords": [
     "ADB",
     "Android ADB",
@@ -24,6 +25,7 @@
   "author": "Yazan Tarifi",
   "license": "MIT",
   "devDependencies": {
+    "@types/inquirer": "^9.0.7",
     "@types/node": "^20.10.6",
     "ts-node": "^10.9.2",
     "typescript": "^5.3.3"
@@ -47,7 +49,6 @@
   ],
   "dependencies": {
     "@types/figlet": "^1.5.8",
-    "@types/inquirer": "^9.0.7",
     "clear": "^0.1.0",
     "commander": "^11.1.0",
     "figlet": "^1.7.0",
