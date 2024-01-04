@@ -1,0 +1,23 @@
+{
+  "name": "tapper-core",
+  "version": "1.0.0",
+  "description": "CLI Source Code To Interact With Android ADB",
+  "main": "index.js",
+  "scripts": {
+    "start": "ts-node src/index.ts",
+    "dev": "tsc -w",
+    "build": "tsc",
+    "cli-link": "yarn --global unlink tapper && yarn --global link"
+  },
+  "bin": {
+    "tapper": "./dist/index.js"
+  },
+  "keywords": ["ADB", "Android ADB", "Android Developer Options", "Android Debug Tool", "Control Android Apps"],
+  "author": "Yazan Tarifi",
+  "license": "MIT",
+  "devDependencies": {
+    "@types/node": "^20.10.6",
+    "ts-node": "^10.9.2",
+    "typescript": "^5.3.3"
+  }
+}
