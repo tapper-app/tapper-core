@@ -86,11 +86,6 @@ function onCommandClick(command: string, options: any) {
     }
 }
 
-
-// Print Attributes
-const options = program.opts();
-console.log("CLI Started With the Following Commands : " + options);
-
 // Show Dropdown Options
 async function onStartDropDownOptionsList() {
     console.log("")
@@ -113,9 +108,12 @@ async function onStartDropDownOptionsList() {
     };
 
     const answers = await inquirer.prompt([question]);
-    const selectedCommand = commandsList[answers.selectedOption];
-    if (selectedCommand) {
-        TapperCommandsExecutionManager.onExecuteCommand(selectedCommand.command);
+    const selectedCommand = commandsList.filter((item) => {
+        return item.name === answers.selectedOption
+    });
+
+    if (selectedCommand && selectedCommand.length > 0) {
+        TapperCommandsExecutionManager.onExecuteCommand(selectedCommand[0]?.command ?? "");
     }
 }
 

@@ -1,0 +1,67 @@
+import { AndroidSettingsKey } from "../models/android.settings.key.js";
+
+export class TapperCommandQueryBuilder {
+
+    private queryString = "adb";
+
+    public setSystemSettingsKey(key: AndroidSettingsKey): TapperCommandQueryBuilder {
+        this.queryString += " " + key;
+        return this;
+    }
+
+    public setShellCommand(): TapperCommandQueryBuilder {
+        this.queryString += " shell";
+        return this;
+    }
+
+    public setSettings(): TapperCommandQueryBuilder {
+        this.queryString += " settings";
+        return this;
+    }
+
+    public put(): TapperCommandQueryBuilder {
+        this.queryString += " put";
+        return this;
+    }
+
+    public setGlobal(): TapperCommandQueryBuilder {
+        this.queryString += " global";
+        return this;
+    }
+
+    public setBoolean(status: boolean): TapperCommandQueryBuilder {
+        if (status) {
+            this.queryString += " true";
+        } else {
+            this.queryString += " false";
+        }
+        return this;
+    }
+
+    public setEnabledByNumbers(status: boolean): TapperCommandQueryBuilder {
+        if (status) {
+            this.queryString += " 1";
+        } else {
+            this.queryString += " 0";
+        }
+        return this;
+    }
+
+    public setEnabledByNumbersNextLevel(status: boolean): TapperCommandQueryBuilder {
+        if (status) {
+            this.queryString += " 2";
+        } else {
+            this.queryString += " 1";
+        }
+        return this;
+    }
+
+    public setCustomValue(value: string): TapperCommandQueryBuilder {
+        this.queryString += " " + value;
+        return this;
+    }
+
+    public getQuery(): string {
+        return this.queryString;
+    }
+}

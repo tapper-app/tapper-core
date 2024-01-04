@@ -1,5 +1,7 @@
 import { TapperArgumentEntity } from "../models/tapper.argument.entity.js";
 import {TapperOptionPickerEntity} from "../models/tapper.option.picker.entity.js";
+import inquirer from "inquirer";
+import {TapperCommandsExecutionManager} from "../tapper.commands.execution.manager.js";
 
 export class TapperCommandsManager {
 
@@ -15,6 +17,34 @@ export class TapperCommandsManager {
     public static EXECUTE_TESTING_EVENTS_COMMAND = "execute-testing-events";
     public static EXECUTE_ANDROID_MONKEY_TESTING_COMMAND = "execute-monkey-testing";
     public static EXECUTE_AUTO_FLOW_TESTING_COMMAND = "execute-auto-flow";
+
+    static async onRepeatAskCommandsQuestion() {
+        const options: Array<string> = [];
+        const commandsList = TapperCommandsManager.getDropdownOptionsList();
+        for (let index = 0; index < commandsList.length; index++) {
+            const command = commandsList[index];
+            if (command) {
+                options.push(command.name);
+            }
+        }
+
+
+        const question = {
+            type: 'list',
+            name: 'selectedOption',
+            message: 'Please select an Command To Start:',
+            choices: options,
+        };
+
+        const answers = await inquirer.prompt([question]);
+        const selectedCommand = commandsList.filter((item) => {
+            return item.name === answers.selectedOption
+        });
+
+        if (selectedCommand && selectedCommand.length > 0) {
+            TapperCommandsExecutionManager.onExecuteCommand(selectedCommand[0]?.command ?? "");
+        }
+    }
 
     public static getApplicationArgsOptions(): Array<TapperArgumentEntity> {
         const options: Array<TapperArgumentEntity> = [];
