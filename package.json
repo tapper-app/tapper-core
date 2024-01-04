@@ -7,17 +7,48 @@
     "start": "ts-node src/index.ts",
     "dev": "tsc -w",
     "build": "tsc",
-    "cli-link": "yarn --global unlink tapper && yarn --global link"
+    "cli-link": "yarn --global unlink tapper-core && yarn --global link",
+    "validate": "npm run build && npm run dev && npm run cli-link"
   },
   "bin": {
     "tapper": "./dist/index.js"
   },
-  "keywords": ["ADB", "Android ADB", "Android Developer Options", "Android Debug Tool", "Control Android Apps"],
+  "keywords": [
+    "ADB",
+    "Android ADB",
+    "Android Developer Options",
+    "Android Debug Tool",
+    "Control Android Apps"
+  ],
   "author": "Yazan Tarifi",
   "license": "MIT",
   "devDependencies": {
     "@types/node": "^20.10.6",
     "ts-node": "^10.9.2",
     "typescript": "^5.3.3"
+  },
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/tapper-app/tapper-core"
+  },
+  "engines": {
+    "node": ">=21.1.0",
+    "npm": ">=10.2.0"
+  },
+  "homepage": "https://tapperapp.com",
+  "bugs": {
+    "url": "https://github.com/tapper-app/tapper-core/issues"
+  },
+  "files": [
+    "dist",
+    "src",
+    "index.js"
+  ],
+  "dependencies": {
+    "@types/chalk": "^2.2.0",
+    "@types/figlet": "^1.5.8",
+    "chalk": "^5.3.0",
+    "commander": "^11.1.0",
+    "figlet": "^1.7.0"
   }
 }
