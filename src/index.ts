@@ -4,5 +4,4 @@
 import figlet from 'figlet';
 
 // Start Tapper Initialization in Terminal
-
 console.log(figlet.textSync("Tapper"));

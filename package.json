@@ -8,7 +8,8 @@
     "dev": "tsc -w",
     "build": "tsc",
     "cli-link": "yarn --global unlink tapper-core && yarn --global link",
-    "validate": "npm run build && npm run dev && npm run cli-link"
+    "validate": "npm run build && npm run cli-link",
+    "run-dev": "npm run validate && tapper"
   },
   "bin": {
     "tapper": "./dist/index.js"

@@ -17,3 +17,7 @@ Run: tapper
 ```
 Validate Changes: npm run validate
 ```
+
+```agsl
+Validate and Run Directly: npm run run-dev
+```
