@@ -20,6 +20,16 @@ export class TapperCommandQueryBuilder {
         return this;
     }
 
+    public setSystem(): TapperCommandQueryBuilder {
+        this.queryString += " system";
+        return this;
+    }
+
+    public setProp(): TapperCommandQueryBuilder {
+        this.queryString += " setprop";
+        return this;
+    }
+
     public setSettings(): TapperCommandQueryBuilder {
         this.queryString += " settings";
         return this;

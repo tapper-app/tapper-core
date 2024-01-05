@@ -51,6 +51,11 @@ export class TapperCommandsExecutionManager {
             TapperGeneralOptionsCommandsManager.onExecuteGeneralOptionsCommands();
             return;
         }
+
+        if (command === TapperCommandsManager.EXECUTE_DEVELOPER_OPTION_COMMAND) {
+            TapperDeveloperOptionsCommandsManager.onExecuteDeveloperOptionsCommands();
+            return;
+        }
     }
 
     public static onExecuteCommandWithAttributes(command: string, attributes: Array<String>) {
