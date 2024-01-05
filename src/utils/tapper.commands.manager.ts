@@ -56,7 +56,8 @@ export class TapperCommandsManager {
             message: questionName,
         };
 
-        return inquirer.prompt([question]);
+        const answer = await inquirer.prompt([question]);
+        return answer.question;
     }
 
     static async onAskCommandQuestions(questions: Array<CommandQuestionEntity<AndroidGeneralSettingsKey>>): Promise<CommandQuestionEntity<AndroidGeneralSettingsKey> | undefined> {

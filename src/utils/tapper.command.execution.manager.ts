@@ -14,4 +14,13 @@ export class TapperCommandExecutionManager {
         });
     }
 
+    public static onExecuteCommandStringWithoutInput(command: string) {
+        exec(command, (error, stdout: string, stderr: string) => {
+            if (error) {
+                console.log("Error While Executing the Command ... " + error.message)
+                return
+            }
+        });
+    }
+
 }

@@ -39,6 +39,7 @@ export class TapperDeveloperOptionsCommandsManager {
             const question = this.getQuestionNameByKey(command.inputQuestion)
             TapperCommandsManager.onAskStringInputQuestion(question)
                 .then((answer) => {
+                    console.log("Answer : " + answer)
                     this.onExecuteCommand(command, answer);
                 });
         } else {
@@ -90,6 +91,8 @@ export class TapperDeveloperOptionsCommandsManager {
         }
 
         TapperCommandExecutionManager.onExecuteCommandString(commandToExecute.getQuery());
+        TapperCommandExecutionManager.onExecuteCommandStringWithoutInput("adb shell service check SurfaceFlinger");
+        TapperCommandExecutionManager.onExecuteCommandStringWithoutInput("adb shell service call activity 1599295570");
     }
 
     private static isNumberAttribute(command: AndroidSettingsKey): boolean {
@@ -158,6 +161,10 @@ export class TapperDeveloperOptionsCommandsManager {
         }
 
         if (command == AndroidSettingsKey.GPU_OVERDRAW) {
+            return true;
+        }
+
+        if (command == AndroidSettingsKey.LAYOUT_BOUNDS) {
             return true;
         }
 
