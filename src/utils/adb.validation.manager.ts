@@ -7,12 +7,24 @@ export class AdbValidationManager {
         const command = 'adb version';
 
         exec(command, (error, stdout, stderr) => {
+            if (stdout || stdout.includes('Android Debug Bridge')) {
+                console.log("")
+                console.log("======= ADB Installed")
+                console.log("")
+                return Promise.resolve(true);
+            }
+
             if (error) {
+                console.log("")
+                console.log("======= ADB Not Installed")
+                console.log("")
                 return Promise.resolve(false);
             }
 
             if (stderr) {
-                console.log("ADB Commands Error : " + stderr)
+                console.log("")
+                console.log("======= ADB Not Installed")
+                console.log("")
                 return Promise.resolve(false);
             }
 
@@ -23,7 +35,9 @@ export class AdbValidationManager {
                 console.log(`ADB Installed on Your Device. Version: ${adbVersion}`);
                 return Promise.resolve(true);
             } else {
-                console.log('ADB is Not Installed or the version information could not be retrieved.');
+                console.log("")
+                console.log("======= ADB Not Installed")
+                console.log("")
                 return Promise.resolve(false);
             }
         });

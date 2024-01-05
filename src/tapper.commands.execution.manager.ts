@@ -19,25 +19,7 @@ export class TapperCommandsExecutionManager {
         }
 
         if (command === TapperCommandsManager.VALIDATE_ADB_INSTALLATION_COMMAND) {
-            AdbValidationManager.checkAdbInstallation()
-                .then((result) => {
-                    if (result) {
-                        console.log("")
-                        console.log("======= ADB Installed")
-                        console.log("")
-                    } else {
-                        console.log("")
-                        console.log("======= ADB Not Installed")
-                        console.log("")
-                    }
-
-                    TapperCommandsManager.onRepeatAskCommandsQuestion();
-                })
-                .catch((ex: Error) => {
-                    console.log("======= ADB Installation Check Error : " + ex.message)
-                    TapperCommandsManager.onRepeatAskCommandsQuestion();
-                });
-
+            AdbValidationManager.checkAdbInstallation();
             return;
         }
 

@@ -39,7 +39,6 @@ export class TapperDeveloperOptionsCommandsManager {
             const question = this.getQuestionNameByKey(command.inputQuestion)
             TapperCommandsManager.onAskStringInputQuestion(question)
                 .then((answer) => {
-                    console.log("Answer : " + answer)
                     this.onExecuteCommand(command, answer);
                 });
         } else {
