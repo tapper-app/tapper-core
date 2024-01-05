@@ -1,7 +1,9 @@
-import { TapperArgumentEntity } from "../models/tapper.argument.entity.js";
+import {TapperArgumentEntity} from "../models/tapper.argument.entity.js";
 import {TapperOptionPickerEntity} from "../models/tapper.option.picker.entity.js";
 import inquirer from "inquirer";
 import {TapperCommandsExecutionManager} from "../tapper.commands.execution.manager.js";
+import {CommandQuestionEntity} from "../models/command.question.entity.js";
+import {AndroidGeneralSettingsKey} from "../models/android.general.settings.key.js";
 
 export class TapperCommandsManager {
 
@@ -44,6 +46,41 @@ export class TapperCommandsManager {
         if (selectedCommand && selectedCommand.length > 0) {
             TapperCommandsExecutionManager.onExecuteCommand(selectedCommand[0]?.command ?? "");
         }
+    }
+
+    static async  onAskStringInputQuestion(questionName: string): Promise<string> {
+        const question = {
+            type: 'input',
+            name: 'question',
+            message: questionName,
+        };
+
+        return inquirer.prompt([question]);
+    }
+
+    static async onAskCommandQuestions(questions: Array<CommandQuestionEntity<AndroidGeneralSettingsKey>>): Promise<CommandQuestionEntity<AndroidGeneralSettingsKey> | undefined> {
+        const options: Array<string> = questions.map((item) => {
+            return item.name
+        });
+
+        const answer = await this.getCommandsQuestionResponseByString(options);
+        const selectedCommand = questions.filter((item) => {
+            return item.name === answer
+        });
+
+        return Promise.resolve(selectedCommand[0]);
+    }
+
+    private static async getCommandsQuestionResponseByString(questions: Array<string>): Promise<string> {
+        const question = {
+            type: 'list',
+            name: 'selectedOption',
+            message: 'Please select an Command To Start:',
+            choices: questions,
+        };
+
+        const answers = await inquirer.prompt([question]);
+        return answers.selectedOption;
     }
 
     public static getApplicationArgsOptions(): Array<TapperArgumentEntity> {

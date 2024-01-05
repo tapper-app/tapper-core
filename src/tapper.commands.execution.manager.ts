@@ -22,9 +22,13 @@ export class TapperCommandsExecutionManager {
             AdbValidationManager.checkAdbInstallation()
                 .then((result) => {
                     if (result) {
+                        console.log("")
                         console.log("======= ADB Installed")
+                        console.log("")
                     } else {
+                        console.log("")
                         console.log("======= ADB Not Installed")
+                        console.log("")
                     }
 
                     TapperCommandsManager.onRepeatAskCommandsQuestion();
@@ -43,7 +47,10 @@ export class TapperCommandsExecutionManager {
             return;
         }
 
-
+        if (command === TapperCommandsManager.EXECUTE_GENERAL_OPTIONS_COMMAND) {
+            TapperGeneralOptionsCommandsManager.onExecuteGeneralOptionsCommands();
+            return;
+        }
     }
 
     public static onExecuteCommandWithAttributes(command: string, attributes: Array<String>) {

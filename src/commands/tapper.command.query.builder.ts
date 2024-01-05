@@ -1,10 +1,16 @@
 import { AndroidSettingsKey } from "../models/android.settings.key.js";
+import {AndroidGeneralSettingsKey} from "../models/android.general.settings.key.js";
 
 export class TapperCommandQueryBuilder {
 
     private queryString = "adb";
 
     public setSystemSettingsKey(key: AndroidSettingsKey): TapperCommandQueryBuilder {
+        this.queryString += " " + key;
+        return this;
+    }
+
+    public setGeneralSettingsKey(key: AndroidGeneralSettingsKey): TapperCommandQueryBuilder {
         this.queryString += " " + key;
         return this;
     }

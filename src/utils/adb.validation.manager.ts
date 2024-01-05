@@ -8,13 +8,12 @@ export class AdbValidationManager {
 
         exec(command, (error, stdout, stderr) => {
             if (error) {
-                console.error('Error executing adb command:', error.message);
-                return Promise.reject(error);
+                return Promise.resolve(false);
             }
 
             if (stderr) {
-                console.error();
-                return Promise.reject(Error(`adb command returned an error: ${stderr}`));
+                console.log("ADB Commands Error : " + stderr)
+                return Promise.resolve(false);
             }
 
             const adbVersionMatch = stdout.match(/version (\d+\.\d+\.\d+)/);
