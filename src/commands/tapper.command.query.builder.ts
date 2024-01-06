@@ -1,5 +1,6 @@
 import { AndroidSettingsKey } from "../models/android.settings.key.js";
 import {AndroidGeneralSettingsKey} from "../models/android.general.settings.key.js";
+import {AndroidTestingOptionsType} from "../models/android.testing.options.type.js";
 
 export class TapperCommandQueryBuilder {
 
@@ -11,6 +12,11 @@ export class TapperCommandQueryBuilder {
     }
 
     public setGeneralSettingsKey(key: AndroidGeneralSettingsKey): TapperCommandQueryBuilder {
+        this.queryString += " " + key;
+        return this;
+    }
+
+    public setAndroidTestingKey(key: AndroidTestingOptionsType): TapperCommandQueryBuilder {
         this.queryString += " " + key;
         return this;
     }
@@ -60,6 +66,11 @@ export class TapperCommandQueryBuilder {
         } else {
             this.queryString += " 0";
         }
+        return this;
+    }
+
+    public setInput(): TapperCommandQueryBuilder {
+        this.queryString += " input";
         return this;
     }
 

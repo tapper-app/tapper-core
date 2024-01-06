@@ -5,6 +5,7 @@ import {TapperCommandsExecutionManager} from "../tapper.commands.execution.manag
 import {CommandQuestionEntity} from "../models/command.question.entity.js";
 import {AndroidGeneralSettingsKey} from "../models/android.general.settings.key.js";
 import {AndroidSettingsKey} from "../models/android.settings.key.js";
+import {AndroidTestingOptionsType} from "../models/android.testing.options.type.js";
 
 export class TapperCommandsManager {
 
@@ -61,6 +62,19 @@ export class TapperCommandsManager {
     }
 
     static async onAskCommandQuestions(questions: Array<CommandQuestionEntity<AndroidGeneralSettingsKey>>): Promise<CommandQuestionEntity<AndroidGeneralSettingsKey> | undefined> {
+        const options: Array<string> = questions.map((item) => {
+            return item.name
+        });
+
+        const answer = await this.getCommandsQuestionResponseByString(options);
+        const selectedCommand = questions.filter((item) => {
+            return item.name === answer
+        });
+
+        return Promise.resolve(selectedCommand[0]);
+    }
+
+    static async onAskCommandByTestingQuestions(questions: Array<CommandQuestionEntity<AndroidTestingOptionsType>>): Promise<CommandQuestionEntity<AndroidTestingOptionsType> | undefined> {
         const options: Array<string> = questions.map((item) => {
             return item.name
         });

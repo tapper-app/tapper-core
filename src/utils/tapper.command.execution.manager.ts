@@ -14,6 +14,10 @@ export class TapperCommandExecutionManager {
         });
     }
 
+    public static sleep(ms: number): Promise<void> {
+        return new Promise(resolve => setTimeout(resolve, ms));
+    }
+
     public static onExecuteCommandStringWithoutInput(command: string) {
         exec(command, (error, stdout: string, stderr: string) => {
             if (error) {

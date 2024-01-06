@@ -2,6 +2,8 @@ import {TapperCommandsManager} from "./utils/tapper.commands.manager.js";
 import {TapperGeneralOptionsCommandsManager} from "./commands/tapper.general.options.commands.manager.js";
 import {TapperDeveloperOptionsCommandsManager} from "./commands/tapper.developer.options.commands.manager.js";
 import {AdbValidationManager} from "./utils/adb.validation.manager.js";
+import {TapperCommandExecutionManager} from "./utils/tapper.command.execution.manager.js";
+import {TapperTestingCommandsManager} from "./commands/tapper.testing.commands.manager.js";
 
 export class TapperCommandsExecutionManager {
 
@@ -38,10 +40,34 @@ export class TapperCommandsExecutionManager {
             TapperDeveloperOptionsCommandsManager.onExecuteDeveloperOptionsCommands();
             return;
         }
+
+        if (command === TapperCommandsManager.EXECUTE_ANDROID_MONKEY_TESTING_COMMAND) {
+            this.onExecuteNativeAndroidMonkeyTesting();
+            return;
+        }
+
+        if (command === TapperCommandsManager.EXECUTE_TESTING_EVENTS_COMMAND) {
+            TapperTestingCommandsManager.onExecuteTestingOptionsCommands();
+            return;
+        }
     }
 
     public static onExecuteCommandWithAttributes(command: string, attributes: Array<String>) {
 
+    }
+
+    private static async onExecuteNativeAndroidMonkeyTesting() {
+        const packageNameQuestion = await TapperCommandsManager.onAskStringInputQuestion("Insert Your Application Package Name ?");
+        const numberOfEventsCount = await TapperCommandsManager.onAskStringInputQuestion("Write how Many Events you want to Execute on your Application ?");
+        if (numberOfEventsCount === '0' || numberOfEventsCount === '' || !numberOfEventsCount) {
+            return
+        }
+
+        if (!packageNameQuestion || packageNameQuestion === '') {
+            return
+        }
+
+        TapperCommandExecutionManager.onExecuteCommandStringWithoutInput(`adb shell monkey -p ${packageNameQuestion} -v ${numberOfEventsCount}`);
     }
 
     private static onPrintHelpCommandsExamples() {
