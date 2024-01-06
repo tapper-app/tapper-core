@@ -3,6 +3,7 @@ import {AndroidTestingOptionsType} from "../models/android.testing.options.type.
 import {TapperCommandsManager} from "../utils/tapper.commands.manager.js";
 import {TapperCommandExecutionManager} from "../utils/tapper.command.execution.manager.js";
 import {TapperCommandQueryBuilder} from "./tapper.command.query.builder.js";
+import {animationFrame} from "rxjs";
 
 export class TapperTestingCommandsManager {
 
@@ -14,6 +15,41 @@ export class TapperTestingCommandsManager {
     // SubList Selected Option Question
     private static QUESTION_COORDINATES = "coordinates";
     private static QUESTION_DEVICE_HEIGHT = "height";
+
+    // Direct Executable Actions
+    private static EXECUTION_CLICK = "click";
+    private static EXECUTION_DOUBLE_CLICK = "double-click";
+    private static EXECUTION_SCROLL_TO_TOP = "scroll-top";
+    private static EXECUTION_SCROLL_TO_BOTTOM = "scroll-bottom";
+
+    public static onExecuteCommandByAttributes(attributes: Array<string>) {
+        let testingCommandToExecute: AndroidTestingOptionsType | null = null;
+        const inputAnswer = attributes[attributes.length - 1]?.trim() ?? "";
+        if (attributes.includes(TapperTestingCommandsManager.EXECUTION_CLICK)) {
+            testingCommandToExecute = AndroidTestingOptionsType.CLICK;
+        }
+
+        if (attributes.includes(TapperTestingCommandsManager.EXECUTION_DOUBLE_CLICK)) {
+            testingCommandToExecute = AndroidTestingOptionsType.DOUBLE_CLICK;
+        }
+
+        if (attributes.includes(TapperTestingCommandsManager.EXECUTION_SCROLL_TO_TOP)) {
+            testingCommandToExecute = AndroidTestingOptionsType.SCROLL_TO_TOP;
+        }
+
+        if (attributes.includes(TapperTestingCommandsManager.EXECUTION_SCROLL_TO_BOTTOM)) {
+            testingCommandToExecute = AndroidTestingOptionsType.SCROLL_TO_BOTTOM;
+        }
+
+        if (testingCommandToExecute != null) {
+            this.onExecuteCommand({
+                name: "",
+                isDirectCommand: false,
+                inputQuestion: "",
+                command: testingCommandToExecute
+            }, inputAnswer)
+        }
+    }
 
     public static onExecuteTestingOptionsCommands() {
         const questions = this.getCommandsQuestions();

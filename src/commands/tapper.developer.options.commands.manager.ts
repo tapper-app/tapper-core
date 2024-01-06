@@ -3,6 +3,7 @@ import {CommandQuestionEntity} from "../models/command.question.entity.js";
 import {AndroidSettingsKey} from "../models/android.settings.key.js";
 import {TapperCommandQueryBuilder} from "./tapper.command.query.builder.js";
 import {TapperCommandExecutionManager} from "../utils/tapper.command.execution.manager.js";
+import {AndroidGeneralSettingsKey} from "../models/android.general.settings.key.js";
 
 export class TapperDeveloperOptionsCommandsManager {
 
@@ -22,6 +23,77 @@ export class TapperDeveloperOptionsCommandsManager {
     private static QUESTION_TOGGLE_HARDWARE_ACCELERATION = "Enable / Disable Hardware Acceleration";
     private static QUESTION_TOGGLE_FORCE_RTL = "Enable / Disable Force Rtl";
     private static QUESTION_CHANGE_GPU_RENDERING = "Change Gpu Rendering";
+
+    // Direct Executable Actions
+    private static EXECUTION_GPU_OVERDRAW = "overdraw";
+    private static EXECUTION_LAYOUT_BOUNDS = "layout";
+    private static EXECUTION_TOUCHES = "touch";
+    private static EXECUTION_POINTER_LOCATION = "pointer";
+    private static EXECUTION_STRICT_MODE = "strict";
+    private static EXECUTION_GPU_UPDATES = "gpu-updates";
+    private static EXECUTION_DEVELOPER_OPTIONS = "dev-options";
+    private static EXECUTION_USB_DEBUGGING = "usb";
+    private static EXECUTION_HARDWARE_ACCELERATOR = "hardware";
+    private static EXECUTION_RTL = "rtl";
+    private static EXECUTION_CHANGE_GPU_RENDERING = "gpu-rendering";
+
+    public static onExecuteCommandByAttributes(attributes: Array<string>) {
+        let command: AndroidSettingsKey | null = null;
+        const inputAnswer = attributes[attributes.length - 1]?.trim() ?? "";
+
+        if (attributes.includes(TapperDeveloperOptionsCommandsManager.EXECUTION_GPU_OVERDRAW)) {
+            command = AndroidSettingsKey.GPU_OVERDRAW;
+        }
+
+        if (attributes.includes(TapperDeveloperOptionsCommandsManager.EXECUTION_LAYOUT_BOUNDS)) {
+            command = AndroidSettingsKey.LAYOUT_BOUNDS;
+        }
+
+        if (attributes.includes(TapperDeveloperOptionsCommandsManager.EXECUTION_TOUCHES)) {
+            command = AndroidSettingsKey.SHOW_TOUCHES;
+        }
+
+        if (attributes.includes(TapperDeveloperOptionsCommandsManager.EXECUTION_POINTER_LOCATION)) {
+            command = AndroidSettingsKey.SHOW_POINTER_LOCATION;
+        }
+
+        if (attributes.includes(TapperDeveloperOptionsCommandsManager.EXECUTION_STRICT_MODE)) {
+            command = AndroidSettingsKey.STRICT_MODE;
+        }
+
+        if (attributes.includes(TapperDeveloperOptionsCommandsManager.EXECUTION_GPU_UPDATES)) {
+            command = AndroidSettingsKey.VIEW_UPDATES;
+        }
+
+        if (attributes.includes(TapperDeveloperOptionsCommandsManager.EXECUTION_DEVELOPER_OPTIONS)) {
+            command = AndroidSettingsKey.DEVELOPER_OPTIONS;
+        }
+
+        if (attributes.includes(TapperDeveloperOptionsCommandsManager.EXECUTION_USB_DEBUGGING)) {
+            command = AndroidSettingsKey.USB_DEBUGGING_V2;
+        }
+
+        if (attributes.includes(TapperDeveloperOptionsCommandsManager.EXECUTION_HARDWARE_ACCELERATOR)) {
+            command = AndroidSettingsKey.HARDWARE_ACCELERATION;
+        }
+
+        if (attributes.includes(TapperDeveloperOptionsCommandsManager.EXECUTION_RTL)) {
+            command = AndroidSettingsKey.FORCE_RTL;
+        }
+
+        if (attributes.includes(TapperDeveloperOptionsCommandsManager.EXECUTION_CHANGE_GPU_RENDERING)) {
+            command = AndroidSettingsKey.GPU_RENDERING;
+        }
+
+        if (command != null) {
+            this.onExecuteCommand({
+                name: "",
+                isDirectCommand: false,
+                inputQuestion: "",
+                command: command
+            }, inputAnswer)
+        }
+    }
 
     public static onExecuteDeveloperOptionsCommands() {
         const questions = this.getCommandsQuestions();

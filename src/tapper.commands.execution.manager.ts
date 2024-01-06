@@ -59,8 +59,31 @@ export class TapperCommandsExecutionManager {
         }
     }
 
-    public static onExecuteCommandWithAttributes(command: string, attributes: Array<String>) {
+    public static onExecuteCommandWithAttributes(command: string, attributes: Array<string>) {
+        if (command === TapperCommandsManager.EXECUTE_AUTO_FLOW_TESTING_COMMAND) {
+            this.onExecuteAutoTestingFlow();
+            return
+        }
 
+        if (command === TapperCommandsManager.EXECUTE_TESTING_EVENTS_COMMAND) {
+            TapperTestingCommandsManager.onExecuteCommandByAttributes(attributes);
+            return;
+        }
+
+        if (command === TapperCommandsManager.EXECUTE_GENERAL_OPTIONS_COMMAND) {
+            TapperGeneralOptionsCommandsManager.onExecuteCommandByAttributes(attributes);
+            return;
+        }
+
+        if (command === TapperCommandsManager.EXECUTE_DEVELOPER_OPTION_COMMAND) {
+            TapperDeveloperOptionsCommandsManager.onExecuteCommandByAttributes(attributes);
+            return;
+        }
+
+        if (command === TapperCommandsManager.EXECUTE_ANDROID_MONKEY_TESTING_COMMAND) {
+            this.onExecuteNativeAndroidMonkeyTesting();
+            return;
+        }
     }
 
     private static async onExecuteAutoTestingFlow() {
@@ -77,7 +100,13 @@ export class TapperCommandsExecutionManager {
         }
 
         const testingEventsToExecute: Array<CommandQuestionEntity<AndroidTestingOptionsType>> = [];
-        const testingOptions = [AndroidTestingOptionsType.CLICK, AndroidTestingOptionsType.DOUBLE_CLICK, AndroidTestingOptionsType.SCROLL_TO_BOTTOM, AndroidTestingOptionsType.SCROLL_TO_TOP];
+        const testingOptions = [
+            AndroidTestingOptionsType.CLICK,
+            AndroidTestingOptionsType.DOUBLE_CLICK,
+            AndroidTestingOptionsType.SCROLL_TO_BOTTOM,
+            AndroidTestingOptionsType.SCROLL_TO_TOP
+        ];
+
         for (let i = 0; i < eventsCount; i++) {
             const randomIndex = Math.floor(Math.random() * testingOptions.length);
             const randomOption = testingOptions[randomIndex];

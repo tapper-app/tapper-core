@@ -21,6 +21,62 @@ export class TapperGeneralOptionsCommandsManager {
     private static QUESTION_UN_INSTALL_APK = "UnInstall Apk on Device";
     private static QUESTION_REBOOT = "Reboot Device";
 
+    // Direct Executable Actions
+    private static EXECUTION_DARK_MODE = "dark-mode";
+    private static EXECUTION_POWER_SAVING_MODE = "power";
+    private static EXECUTION_WIFI_MODE = "wifi";
+    private static EXECUTION_CONNECTED_DEVICES = "device";
+    private static EXECUTION_CONNECTED_DEVICES_DETAILS = "device-details";
+    private static EXECUTION_INSTALL_APK = "install";
+    private static EXECUTION_UN_INSTALL = "delete";
+    private static EXECUTION_REBOOT = "restart";
+
+    public static onExecuteCommandByAttributes(attributes: Array<string>) {
+        let command: AndroidGeneralSettingsKey | null = null;
+        const inputAnswer = attributes[attributes.length - 1]?.trim() ?? "";
+
+        if (attributes.includes(TapperGeneralOptionsCommandsManager.EXECUTION_DARK_MODE)) {
+            command = AndroidGeneralSettingsKey.ToggleDarkMode;
+        }
+
+        if (attributes.includes(TapperGeneralOptionsCommandsManager.EXECUTION_POWER_SAVING_MODE)) {
+            command = AndroidGeneralSettingsKey.PowerSavingMode;
+        }
+
+        if (attributes.includes(TapperGeneralOptionsCommandsManager.EXECUTION_WIFI_MODE)) {
+            command = AndroidGeneralSettingsKey.ToggleWifi;
+        }
+
+        if (attributes.includes(TapperGeneralOptionsCommandsManager.EXECUTION_CONNECTED_DEVICES)) {
+            command = AndroidGeneralSettingsKey.Devices;
+        }
+
+        if (attributes.includes(TapperGeneralOptionsCommandsManager.EXECUTION_CONNECTED_DEVICES_DETAILS)) {
+            command = AndroidGeneralSettingsKey.DetailedDevices;
+        }
+
+        if (attributes.includes(TapperGeneralOptionsCommandsManager.EXECUTION_INSTALL_APK)) {
+            command = AndroidGeneralSettingsKey.InstallApk;
+        }
+
+        if (attributes.includes(TapperGeneralOptionsCommandsManager.EXECUTION_UN_INSTALL)) {
+            command = AndroidGeneralSettingsKey.UnInstallApk;
+        }
+
+        if (attributes.includes(TapperGeneralOptionsCommandsManager.EXECUTION_REBOOT)) {
+            command = AndroidGeneralSettingsKey.Reboot;
+        }
+
+        if (command != null) {
+            this.onExecuteCommand({
+                name: "",
+                isDirectCommand: false,
+                inputQuestion: "",
+                command: command
+            }, inputAnswer)
+        }
+    }
+
     public static onExecuteGeneralOptionsCommands() {
         const questions = this.getCommandsQuestions();
         TapperCommandsManager.onAskCommandQuestions(questions)

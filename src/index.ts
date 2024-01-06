@@ -119,7 +119,9 @@ async function onStartDropDownOptionsList() {
 
 const isCliStartedWithArguments = process.argv != undefined && process.argv.length > 2
 if (isCliStartedWithArguments) {
-    program.parse(process.argv);
+    const argumentsToValidate = process.argv;
+    const executionKey = argumentsToValidate[argumentsToValidate.length - 3];
+    onCommandClick(executionKey ?? "", argumentsToValidate);
 } else {
     onStartDropDownOptionsList();
 }
