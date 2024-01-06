@@ -4,6 +4,8 @@ import {TapperDeveloperOptionsCommandsManager} from "./commands/tapper.developer
 import {AdbValidationManager} from "./utils/adb.validation.manager.js";
 import {TapperCommandExecutionManager} from "./utils/tapper.command.execution.manager.js";
 import {TapperTestingCommandsManager} from "./commands/tapper.testing.commands.manager.js";
+import {AndroidTestingOptionsType} from "./models/android.testing.options.type.js";
+import {CommandQuestionEntity} from "./models/command.question.entity.js";
 
 export class TapperCommandsExecutionManager {
 
@@ -50,10 +52,61 @@ export class TapperCommandsExecutionManager {
             TapperTestingCommandsManager.onExecuteTestingOptionsCommands();
             return;
         }
+
+        if (command === TapperCommandsManager.EXECUTE_AUTO_FLOW_TESTING_COMMAND) {
+            this.onExecuteAutoTestingFlow();
+            return;
+        }
     }
 
     public static onExecuteCommandWithAttributes(command: string, attributes: Array<String>) {
 
+    }
+
+    private static async onExecuteAutoTestingFlow() {
+        const eventsCountAnswer = await TapperCommandsManager.onAskStringInputQuestion("How many Events you want To Execute on Your Device ?");
+        const screenHeightAnswer = await TapperCommandsManager.onAskStringInputQuestion("What is the Screen Height of your Device (In Pixel) ?");
+        const screenHeight = parseInt(screenHeightAnswer);
+        const eventsCount = parseInt(eventsCountAnswer);
+        if (!screenHeight || screenHeight == 0) {
+            return
+        }
+
+        if (!eventsCount || eventsCount == 0) {
+            return
+        }
+
+        const testingEventsToExecute: Array<CommandQuestionEntity<AndroidTestingOptionsType>> = [];
+        const testingOptions = [AndroidTestingOptionsType.CLICK, AndroidTestingOptionsType.DOUBLE_CLICK, AndroidTestingOptionsType.SCROLL_TO_BOTTOM, AndroidTestingOptionsType.SCROLL_TO_TOP];
+        for (let i = 0; i < eventsCount; i++) {
+            const randomIndex = Math.floor(Math.random() * testingOptions.length);
+            const randomOption = testingOptions[randomIndex];
+            if (randomOption) {
+                const isScrollEvent = randomOption == AndroidTestingOptionsType.SCROLL_TO_TOP || randomOption == AndroidTestingOptionsType.SCROLL_TO_BOTTOM;
+                let optionResult = "";
+                if (isScrollEvent) {
+                    optionResult = `${screenHeight}`;
+                } else {
+                    const coordinates = TapperCommandExecutionManager.getRandomCoordinates(900, screenHeight);
+                    optionResult = `${coordinates.x},${coordinates.y}`;
+                }
+
+                testingEventsToExecute.push({
+                    name: "",
+                    isDirectCommand: false,
+                    inputQuestion: "",
+                    command: randomOption
+                })
+            }
+        }
+
+        for (let i = 0; i < testingEventsToExecute.length; i++) {
+            const eventToExecute = testingEventsToExecute[i];
+            if (eventToExecute) {
+                await TapperTestingCommandsManager.onExecuteCommand(eventToExecute, eventToExecute.inputQuestion ?? "");
+                await TapperCommandExecutionManager.sleep(300);
+            }
+        }
     }
 
     private static async onExecuteNativeAndroidMonkeyTesting() {
