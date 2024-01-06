@@ -153,7 +153,23 @@ export class TapperCommandsExecutionManager {
     }
 
     private static onPrintHelpCommandsExamples() {
-
+        console.log("")
+        console.log("Tapper Help Commands, The Following Commands is an Short Example for Tapper Usage")
+        console.log("Developer Options Examples")
+        console.log("tapper execute-dev-option layout y -- To Enable Layout Bounds")
+        console.log("tapper execute-dev-option layout n -- To Disable Layout Bounds")
+        console.log("")
+        console.log("Testing Functions Example")
+        console.log("tapper execute-testing-events click 538,1727.9 -- To Perform Click By Coordinates (x,y)")
+        console.log("tapper execute-testing-events double-click 538,1727.9 -- To Perform Double Click By Coordinates (x,y)")
+        console.log("")
+        console.log("General Options Example")
+        console.log("tapper execute-general-options device -- To Show Connected Android Devices")
+        console.log("tapper execute-general-options install pathToApkFile -- To Install Apk on The Device")
+        console.log("")
+        console.log("Execute Native Monkey Testing By Questions")
+        console.log("tapper execute-monkey-testing")
+        console.log("")
     }
 
     private static onPrintOptions(options: Array<string>) {
