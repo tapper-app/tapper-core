@@ -11,6 +11,7 @@ export class TapperGeneralOptionsCommandsManager {
     private static QUESTION_INSTALL_BY_PATH = "install_by_path";
     private static QUESTION_UN_INSTALL_BY_PACKAGE_NAME = "uninstall_by_package_name";
     private static QUESTION_ADD_PACKAGE_NAME = "add_package_name";
+    private static QUESTION_ADD_PHONE_NUMBER = "add_phone_number";
 
     // CLI Actions List - SubList from General Options
     private static QUESTION_TOGGLE_DARK_MODE = "Change Dark Mode";
@@ -23,6 +24,7 @@ export class TapperGeneralOptionsCommandsManager {
     private static QUESTION_REBOOT = "Reboot Device";
     private static QUESTION_REMOVE_PERMISSIONS = "Remove Permissions By Package Name";
     private static QUESTION_HOME_BUTTON_CLICK = "Click On Home Button";
+    private static QUESTION_CALL_PHONE_NUMBER = "Call By Phone Number";
 
     // Direct Executable Actions
     private static EXECUTION_DARK_MODE = "dark-mode";
@@ -34,6 +36,8 @@ export class TapperGeneralOptionsCommandsManager {
     private static EXECUTION_UN_INSTALL = "delete";
     private static EXECUTION_REBOOT = "restart";
     private static EXECUTE_REMOVE_PERMISSIONS = "remove-permissions";
+    private static EXECUTE_HOME_CLICK = "home-tap";
+    private static EXECUTE_PHONE_NUMBER = "call-phone";
 
     public static onExecuteCommandByAttributes(attributes: Array<string>) {
         let command: AndroidGeneralSettingsKey | null = null;
@@ -79,6 +83,17 @@ export class TapperGeneralOptionsCommandsManager {
             isPackageManagerShellCommand = true;
         }
 
+        if (attributes.includes(TapperGeneralOptionsCommandsManager.EXECUTE_HOME_CLICK)) {
+            command = AndroidGeneralSettingsKey.HomeButton;
+            isDirectCommand = true;
+            isPackageManagerShellCommand = false;
+        }
+
+        if (attributes.includes(TapperGeneralOptionsCommandsManager.EXECUTE_PHONE_NUMBER)) {
+            command = AndroidGeneralSettingsKey.PhoneNumber;
+            isDirectCommand = true;
+            isPackageManagerShellCommand = false;
+        }
 
         if (command != null) {
             this.onExecuteCommand({
@@ -124,6 +139,8 @@ export class TapperGeneralOptionsCommandsManager {
             return "Write the Package Name That want to Uninstall from the Device ?";
         } else if (key === TapperGeneralOptionsCommandsManager.QUESTION_ADD_PACKAGE_NAME) {
             return "Write the Package Name That want to Remove Permissions To ?";
+        } else if (key === TapperGeneralOptionsCommandsManager.QUESTION_ADD_PHONE_NUMBER) {
+            return "Write the Phone Number (+123456789) ?";
         } else {
             return "";
         }
@@ -150,6 +167,10 @@ export class TapperGeneralOptionsCommandsManager {
                 }
             } else {
                 commandToExecute.setGeneralSettingsKey(command.command)
+
+                if (inputOption) {
+                    commandToExecute.setCustomValue(inputOption)
+                }
             }
 
             TapperCommandExecutionManager.onExecuteCommandString(commandToExecute.getQuery());
@@ -250,6 +271,13 @@ export class TapperGeneralOptionsCommandsManager {
                 inputQuestion: undefined,
                 isDirectCommand: true,
                 isShellPackageManagerCommand: false
+            },
+            {
+                name: TapperGeneralOptionsCommandsManager.QUESTION_CALL_PHONE_NUMBER,
+                command: AndroidGeneralSettingsKey.PhoneNumber,
+                inputQuestion: TapperGeneralOptionsCommandsManager.QUESTION_ADD_PHONE_NUMBER,
+                isDirectCommand: true,
+                isShellPackageManagerCommand: false
             }
         ];
     }
@@ -267,6 +295,7 @@ export class TapperGeneralOptionsCommandsManager {
             "Reboot Device",
             "Remove Permissions By Package Name",
             "Click On Home Button",
+            "Call Phone Number",
             "",
         ];
     }

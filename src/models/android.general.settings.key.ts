@@ -8,5 +8,6 @@ export enum AndroidGeneralSettingsKey {
     Reboot = "reboot",
     RemovePermissions = "reset-permissions",
     PowerSavingMode = "low_power",
-    HomeButton = " shell am start -W -c android.intent.category.HOME -a android.intent.action.MAIN"
+    HomeButton = " shell am start -W -c android.intent.category.HOME -a android.intent.action.MAIN",
+    PhoneNumber = " shell am start -a android.intent.action.CALL -d tel:"
 }

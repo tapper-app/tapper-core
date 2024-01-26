@@ -94,7 +94,12 @@ export class TapperCommandQueryBuilder {
     }
 
     public setCustomValue(value: string): TapperCommandQueryBuilder {
-        this.queryString += " " + value;
+        if (value.includes("+")) {
+            this.queryString += value;
+        } else {
+            this.queryString += " " + value;
+        }
+
         return this;
     }
 
