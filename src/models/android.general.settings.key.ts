@@ -11,5 +11,6 @@ export enum AndroidGeneralSettingsKey {
     HomeButton = " shell am start -W -c android.intent.category.HOME -a android.intent.action.MAIN",
     PhoneNumber = " shell am start -a android.intent.action.CALL -d tel:",
     OpenUrl = " shell am start -a android.intent.action.VIEW -d",
-    Screenshot = "shell screencap -p"
+    Screenshot = "shell screencap -p",
+    OpenApp = "shell monkey -p {Package} -c android.intent.category.LAUNCHER 1"
 }

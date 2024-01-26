@@ -29,6 +29,7 @@ export class TapperGeneralOptionsCommandsManager {
     private static QUESTION_CALL_PHONE_NUMBER = "Call By Phone Number";
     private static QUESTION_OPEN_URL = "Open Url";
     private static QUESTION_SCREENSHOT = "Take a Screenshot";
+    private static QUESTION_OPEN_APP = "Open Application By Package Name";
 
     // Direct Executable Actions
     private static EXECUTION_DARK_MODE = "dark-mode";
@@ -44,6 +45,7 @@ export class TapperGeneralOptionsCommandsManager {
     private static EXECUTE_PHONE_NUMBER = "call-phone";
     private static EXECUTE_OPEN_URL = "open-url";
     private static EXECUTE_SCREENSHOT = "screenshot";
+    private static EXECUTE_OPEN_APP = "open-app";
 
     public static onExecuteCommandByAttributes(attributes: Array<string>) {
         let command: AndroidGeneralSettingsKey | null = null;
@@ -109,6 +111,12 @@ export class TapperGeneralOptionsCommandsManager {
 
         if (attributes.includes(TapperGeneralOptionsCommandsManager.EXECUTE_SCREENSHOT)) {
             command = AndroidGeneralSettingsKey.Screenshot;
+            isDirectCommand = true;
+            isPackageManagerShellCommand = false;
+        }
+
+        if (attributes.includes(TapperGeneralOptionsCommandsManager.EXECUTE_OPEN_APP)) {
+            command = AndroidGeneralSettingsKey.OpenApp;
             isDirectCommand = true;
             isPackageManagerShellCommand = false;
         }
@@ -195,7 +203,12 @@ export class TapperGeneralOptionsCommandsManager {
                 }
             }
 
-            TapperCommandExecutionManager.onExecuteCommandString(commandToExecute.getQuery());
+            let queryToExecute = commandToExecute.getQuery();
+            if (command.command == AndroidGeneralSettingsKey.OpenApp) {
+                queryToExecute = queryToExecute.replace("{Package}", inputOption)
+            }
+
+            TapperCommandExecutionManager.onExecuteCommandString(queryToExecute);
         } else {
             const commandToExecute = new TapperCommandQueryBuilder()
                 .setShellCommand()
@@ -319,6 +332,13 @@ export class TapperGeneralOptionsCommandsManager {
                 inputQuestion: TapperGeneralOptionsCommandsManager.QUESTION_FILE_PATH,
                 isDirectCommand: true,
                 isShellPackageManagerCommand: false
+            },
+            {
+                name: TapperGeneralOptionsCommandsManager.QUESTION_OPEN_APP,
+                command: AndroidGeneralSettingsKey.OpenApp,
+                inputQuestion: TapperGeneralOptionsCommandsManager.QUESTION_ADD_PACKAGE_NAME,
+                isDirectCommand: true,
+                isShellPackageManagerCommand: false
             }
         ];
     }
@@ -339,6 +359,7 @@ export class TapperGeneralOptionsCommandsManager {
             "Call Phone Number",
             "Open Url",
             "Take Screenshot",
+            "Open Application By Package Name",
             "",
         ];
     }
