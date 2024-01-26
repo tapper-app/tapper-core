@@ -13,6 +13,7 @@ export class TapperGeneralOptionsCommandsManager {
     private static QUESTION_ADD_PACKAGE_NAME = "add_package_name";
     private static QUESTION_ADD_PHONE_NUMBER = "add_phone_number";
     private static QUESTION_ADD_URL = "add_url";
+    private static QUESTION_FILE_PATH = "save_path";
 
     // CLI Actions List - SubList from General Options
     private static QUESTION_TOGGLE_DARK_MODE = "Change Dark Mode";
@@ -27,6 +28,7 @@ export class TapperGeneralOptionsCommandsManager {
     private static QUESTION_HOME_BUTTON_CLICK = "Click On Home Button";
     private static QUESTION_CALL_PHONE_NUMBER = "Call By Phone Number";
     private static QUESTION_OPEN_URL = "Open Url";
+    private static QUESTION_SCREENSHOT = "Take a Screenshot";
 
     // Direct Executable Actions
     private static EXECUTION_DARK_MODE = "dark-mode";
@@ -41,6 +43,7 @@ export class TapperGeneralOptionsCommandsManager {
     private static EXECUTE_HOME_CLICK = "home-tap";
     private static EXECUTE_PHONE_NUMBER = "call-phone";
     private static EXECUTE_OPEN_URL = "open-url";
+    private static EXECUTE_SCREENSHOT = "screenshot";
 
     public static onExecuteCommandByAttributes(attributes: Array<string>) {
         let command: AndroidGeneralSettingsKey | null = null;
@@ -104,6 +107,12 @@ export class TapperGeneralOptionsCommandsManager {
             isPackageManagerShellCommand = false;
         }
 
+        if (attributes.includes(TapperGeneralOptionsCommandsManager.EXECUTE_SCREENSHOT)) {
+            command = AndroidGeneralSettingsKey.Screenshot;
+            isDirectCommand = true;
+            isPackageManagerShellCommand = false;
+        }
+
         if (command != null) {
             this.onExecuteCommand({
                 name: "",
@@ -152,6 +161,8 @@ export class TapperGeneralOptionsCommandsManager {
             return "Write the Phone Number (+123456789) ?";
         } else if (key === TapperGeneralOptionsCommandsManager.QUESTION_ADD_URL) {
             return "Write the Url (https://example.com) ?";
+        } else if (key === TapperGeneralOptionsCommandsManager.QUESTION_FILE_PATH) {
+            return "Write Where you want to Save the Screenshot (Path (/sdcard/screenshot.png)) ?";
         } else {
             return "";
         }
@@ -301,6 +312,13 @@ export class TapperGeneralOptionsCommandsManager {
                 inputQuestion: TapperGeneralOptionsCommandsManager.QUESTION_ADD_URL,
                 isDirectCommand: true,
                 isShellPackageManagerCommand: false
+            },
+            {
+                name: TapperGeneralOptionsCommandsManager.QUESTION_SCREENSHOT,
+                command: AndroidGeneralSettingsKey.Screenshot,
+                inputQuestion: TapperGeneralOptionsCommandsManager.QUESTION_FILE_PATH,
+                isDirectCommand: true,
+                isShellPackageManagerCommand: false
             }
         ];
     }
@@ -320,6 +338,7 @@ export class TapperGeneralOptionsCommandsManager {
             "Click On Home Button",
             "Call Phone Number",
             "Open Url",
+            "Take Screenshot",
             "",
         ];
     }
