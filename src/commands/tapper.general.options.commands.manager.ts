@@ -209,6 +209,11 @@ export class TapperGeneralOptionsCommandsManager {
 
             TapperCommandExecutionManager.onExecuteCommandString(commandToExecute.getQuery());
         }
+
+        if (command.command == AndroidGeneralSettingsKey.UnInstallApk) {
+            TapperCommandExecutionManager.onExecuteCommandString("adb shell pm uninstall " + inputOption);
+            TapperCommandExecutionManager.onExecuteCommandString("adb shell pm clear  " + inputOption);
+        }
     }
 
     private static getCommandsQuestions(): Array<CommandQuestionEntity<AndroidGeneralSettingsKey>> {
