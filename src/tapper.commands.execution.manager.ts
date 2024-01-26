@@ -6,6 +6,7 @@ import {TapperCommandExecutionManager} from "./utils/tapper.command.execution.ma
 import {TapperTestingCommandsManager} from "./commands/tapper.testing.commands.manager.js";
 import {AndroidTestingOptionsType} from "./models/android.testing.options.type.js";
 import {CommandQuestionEntity} from "./models/command.question.entity.js";
+import {TapperDeviceInfoManager} from "./commands/tapper.device.info.manager.js";
 
 export class TapperCommandsExecutionManager {
 
@@ -13,6 +14,11 @@ export class TapperCommandsExecutionManager {
         if (command === TapperCommandsManager.VIEW_TESTING_OPTIONS_COMMAND) {
             this.onPrintOptions(TapperGeneralOptionsCommandsManager.getAvailableCommands());
             TapperCommandsManager.onRepeatAskCommandsQuestion();
+            return
+        }
+
+        if (command === TapperCommandsManager.VIEW_DEVICE_INFO) {
+            TapperDeviceInfoManager.onPrintDeviceInfoList();
             return
         }
 
@@ -62,6 +68,11 @@ export class TapperCommandsExecutionManager {
     public static onExecuteCommandWithAttributes(command: string, attributes: Array<string>) {
         if (command === TapperCommandsManager.EXECUTE_AUTO_FLOW_TESTING_COMMAND) {
             this.onExecuteAutoTestingFlow();
+            return
+        }
+
+        if (command === TapperCommandsManager.VIEW_DEVICE_INFO) {
+            TapperDeviceInfoManager.onPrintDeviceInfoList();
             return
         }
 

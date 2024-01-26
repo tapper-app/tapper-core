@@ -1,4 +1,6 @@
 import { exec } from 'child_process';
+import {TapperDeviceInfoManager} from "../commands/tapper.device.info.manager.js";
+import {DeviceInfoCommand} from "../models/device.info.command.js";
 
 export class TapperCommandExecutionManager {
 
@@ -11,6 +13,22 @@ export class TapperCommandExecutionManager {
             }
 
             console.log(stdout)
+        });
+    }
+
+    // @ts-ignore
+    public static onExecuteCommandByDeviceType(command: DeviceInfoCommand) {
+        exec(command.command, (error, stdout: string, stderr: string) => {
+            if (error) {
+                console.log("Error While Executing the Command ... " + error.message)
+                return
+            }
+
+            const output = stdout.trim().replace("\n", "").replace("\t", "")
+            if (output) {
+                console.log(command.name + "=" + output)
+            }
+
         });
     }
 

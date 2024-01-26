@@ -12,6 +12,7 @@ export class TapperCommandsManager {
     // View Commands
     public static VIEW_DEVELOPER_OPTIONS_COMMAND = "developer-options-view";
     public static VIEW_TESTING_OPTIONS_COMMAND = "testing-options-view";
+    public static VIEW_DEVICE_INFO = "view-device-info";
     public static VALIDATE_ADB_INSTALLATION_COMMAND = "adb-validate";
     public static HELP_COMMAND = "help";
 
@@ -191,6 +192,14 @@ export class TapperCommandsManager {
                     }
                 ]
             },
+            {
+                command: TapperCommandsManager.VIEW_DEVICE_INFO,
+                description: "View Device Info",
+                options: undefined,
+                args: [
+
+                ]
+            },
         ];
     }
 
@@ -244,6 +253,10 @@ export class TapperCommandsManager {
             {
                 name: "Execute Auto Testing Flow",
                 command: TapperCommandsManager.EXECUTE_AUTO_FLOW_TESTING_COMMAND
+            },
+            {
+                name: "View Device Info",
+                command: TapperCommandsManager.VIEW_DEVICE_INFO
             },
             {
                 name: "View Developer Options",

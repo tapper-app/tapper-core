@@ -81,6 +81,9 @@ function onCommandClick(command: string, options: any) {
         case TapperCommandsManager.VALIDATE_ADB_INSTALLATION_COMMAND:
             TapperCommandsExecutionManager.onExecuteCommand(TapperCommandsManager.VALIDATE_ADB_INSTALLATION_COMMAND);
             break
+        case TapperCommandsManager.VIEW_DEVICE_INFO:
+            TapperCommandsExecutionManager.onExecuteCommand(TapperCommandsManager.VIEW_DEVICE_INFO);
+            break
         default:
             TapperCommandsExecutionManager.onExecuteCommandWithAttributes(command, options);
     }
