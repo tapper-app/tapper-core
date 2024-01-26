@@ -1,6 +1,6 @@
 {
   "name": "tapper-core",
-  "version": "0.0.5",
+  "version": "0.0.6",
   "description": "CLI Source Code To Interact With Android ADB",
   "main": "index.js",
   "scripts": {
