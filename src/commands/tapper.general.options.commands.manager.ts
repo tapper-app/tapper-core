@@ -22,6 +22,7 @@ export class TapperGeneralOptionsCommandsManager {
     private static QUESTION_UN_INSTALL_APK = "UnInstall Apk on Device";
     private static QUESTION_REBOOT = "Reboot Device";
     private static QUESTION_REMOVE_PERMISSIONS = "Remove Permissions By Package Name";
+    private static QUESTION_HOME_BUTTON_CLICK = "Click On Home Button";
 
     // Direct Executable Actions
     private static EXECUTION_DARK_MODE = "dark-mode";
@@ -242,6 +243,13 @@ export class TapperGeneralOptionsCommandsManager {
                 inputQuestion: TapperGeneralOptionsCommandsManager.QUESTION_ADD_PACKAGE_NAME,
                 isDirectCommand: true,
                 isShellPackageManagerCommand: true
+            },
+            {
+                name: TapperGeneralOptionsCommandsManager.QUESTION_HOME_BUTTON_CLICK,
+                command: AndroidGeneralSettingsKey.HomeButton,
+                inputQuestion: undefined,
+                isDirectCommand: true,
+                isShellPackageManagerCommand: false
             }
         ];
     }
@@ -257,6 +265,8 @@ export class TapperGeneralOptionsCommandsManager {
             "Install Apk By Path",
             "Uninstall Apk By Package Name",
             "Reboot Device",
+            "Remove Permissions By Package Name",
+            "Click On Home Button",
             "",
         ];
     }

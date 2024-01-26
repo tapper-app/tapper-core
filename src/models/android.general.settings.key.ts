@@ -7,5 +7,6 @@ export enum AndroidGeneralSettingsKey {
     UnInstallApk = "uninstall",
     Reboot = "reboot",
     RemovePermissions = "reset-permissions",
-    PowerSavingMode = "low_power"
+    PowerSavingMode = "low_power",
+    HomeButton = " shell am start -W -c android.intent.category.HOME -a android.intent.action.MAIN"
 }
