@@ -135,7 +135,8 @@ export class TapperCommandsExecutionManager {
                     name: "",
                     isDirectCommand: false,
                     inputQuestion: "",
-                    command: randomOption
+                    command: randomOption,
+                    isShellPackageManagerCommand: false
                 })
             }
         }

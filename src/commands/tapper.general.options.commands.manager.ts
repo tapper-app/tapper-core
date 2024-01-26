@@ -10,6 +10,7 @@ export class TapperGeneralOptionsCommandsManager {
     private static QUESTION_ENABLED_DISABLED = "question_enabled_disabled";
     private static QUESTION_INSTALL_BY_PATH = "install_by_path";
     private static QUESTION_UN_INSTALL_BY_PACKAGE_NAME = "uninstall_by_package_name";
+    private static QUESTION_ADD_PACKAGE_NAME = "add_package_name";
 
     // CLI Actions List - SubList from General Options
     private static QUESTION_TOGGLE_DARK_MODE = "Change Dark Mode";
@@ -20,6 +21,7 @@ export class TapperGeneralOptionsCommandsManager {
     private static QUESTION_INSTALL_APK = "Install Apk on Device";
     private static QUESTION_UN_INSTALL_APK = "UnInstall Apk on Device";
     private static QUESTION_REBOOT = "Reboot Device";
+    private static QUESTION_REMOVE_PERMISSIONS = "Remove Permissions By Package Name";
 
     // Direct Executable Actions
     private static EXECUTION_DARK_MODE = "dark-mode";
@@ -30,9 +32,12 @@ export class TapperGeneralOptionsCommandsManager {
     private static EXECUTION_INSTALL_APK = "install";
     private static EXECUTION_UN_INSTALL = "delete";
     private static EXECUTION_REBOOT = "restart";
+    private static EXECUTE_REMOVE_PERMISSIONS = "remove-permissions";
 
     public static onExecuteCommandByAttributes(attributes: Array<string>) {
         let command: AndroidGeneralSettingsKey | null = null;
+        let isDirectCommand = false;
+        let isPackageManagerShellCommand: boolean = false;
         const inputAnswer = attributes[attributes.length - 1]?.trim() ?? "";
 
         if (attributes.includes(TapperGeneralOptionsCommandsManager.EXECUTION_DARK_MODE)) {
@@ -67,12 +72,20 @@ export class TapperGeneralOptionsCommandsManager {
             command = AndroidGeneralSettingsKey.Reboot;
         }
 
+        if (attributes.includes(TapperGeneralOptionsCommandsManager.EXECUTE_REMOVE_PERMISSIONS)) {
+            command = AndroidGeneralSettingsKey.RemovePermissions;
+            isDirectCommand = true;
+            isPackageManagerShellCommand = true;
+        }
+
+
         if (command != null) {
             this.onExecuteCommand({
                 name: "",
-                isDirectCommand: false,
+                isDirectCommand: isDirectCommand,
                 inputQuestion: "",
-                command: command
+                command: command,
+                isShellPackageManagerCommand: isPackageManagerShellCommand
             }, inputAnswer)
         }
     }
@@ -108,6 +121,8 @@ export class TapperGeneralOptionsCommandsManager {
             return "Insert The Full Path of the Apk File ?";
         } else if (key === TapperGeneralOptionsCommandsManager.QUESTION_UN_INSTALL_BY_PACKAGE_NAME) {
             return "Write the Package Name That want to Uninstall from the Device ?";
+        } else if (key === TapperGeneralOptionsCommandsManager.QUESTION_ADD_PACKAGE_NAME) {
+            return "Write the Package Name That want to Remove Permissions To ?";
         } else {
             return "";
         }
@@ -122,11 +137,21 @@ export class TapperGeneralOptionsCommandsManager {
         }
 
         if (command.isDirectCommand) {
-            const commandToExecute = new TapperCommandQueryBuilder()
-                .setGeneralSettingsKey(command.command)
-                .getQuery();
+            const commandToExecute = new TapperCommandQueryBuilder();
+            if (command.isShellPackageManagerCommand) {
+                commandToExecute.setShellPm()
+                    .setGeneralSettingsKey(command.command)
 
-            TapperCommandExecutionManager.onExecuteCommandString(commandToExecute);
+                if (inputOption) {
+                    commandToExecute
+                        .setPackageParam()
+                        .setCustomValue(inputOption)
+                }
+            } else {
+                commandToExecute.setGeneralSettingsKey(command.command)
+            }
+
+            TapperCommandExecutionManager.onExecuteCommandString(commandToExecute.getQuery());
         } else {
             const commandToExecute = new TapperCommandQueryBuilder()
                 .setShellCommand()
@@ -159,49 +184,64 @@ export class TapperGeneralOptionsCommandsManager {
                 name: TapperGeneralOptionsCommandsManager.QUESTION_TOGGLE_DARK_MODE,
                 command: AndroidGeneralSettingsKey.ToggleDarkMode,
                 inputQuestion: TapperGeneralOptionsCommandsManager.QUESTION_ENABLED_DISABLED,
-                isDirectCommand: false
+                isDirectCommand: false,
+                isShellPackageManagerCommand: false
             },
             {
                 name: TapperGeneralOptionsCommandsManager.QUESTION_POWER_SAVING_MODE,
                 command: AndroidGeneralSettingsKey.PowerSavingMode,
                 inputQuestion: TapperGeneralOptionsCommandsManager.QUESTION_ENABLED_DISABLED,
-                isDirectCommand: false
+                isDirectCommand: false,
+                isShellPackageManagerCommand: false
             },
             {
                 name: TapperGeneralOptionsCommandsManager.QUESTION_WIFI,
                 command: AndroidGeneralSettingsKey.ToggleWifi,
                 inputQuestion: TapperGeneralOptionsCommandsManager.QUESTION_ENABLED_DISABLED,
-                isDirectCommand: false
+                isDirectCommand: false,
+                isShellPackageManagerCommand: false
             },
             {
                 name: TapperGeneralOptionsCommandsManager.QUESTION_SHOW_CONNECTED_DEVICES,
                 command: AndroidGeneralSettingsKey.Devices,
                 inputQuestion: undefined,
-                isDirectCommand: true
+                isDirectCommand: true,
+                isShellPackageManagerCommand: false
             },
             {
                 name: TapperGeneralOptionsCommandsManager.QUESTION_SHOW_CONNECTED_DEVICES_DETAILS,
                 command: AndroidGeneralSettingsKey.DetailedDevices,
                 inputQuestion: undefined,
-                isDirectCommand: true
+                isDirectCommand: true,
+                isShellPackageManagerCommand: false
             },
             {
                 name: TapperGeneralOptionsCommandsManager.QUESTION_INSTALL_APK,
                 command: AndroidGeneralSettingsKey.InstallApk,
                 inputQuestion: TapperGeneralOptionsCommandsManager.QUESTION_INSTALL_BY_PATH,
-                isDirectCommand: false
+                isDirectCommand: false,
+                isShellPackageManagerCommand: false
             },
             {
                 name: TapperGeneralOptionsCommandsManager.QUESTION_UN_INSTALL_APK,
                 command: AndroidGeneralSettingsKey.UnInstallApk,
                 inputQuestion: TapperGeneralOptionsCommandsManager.QUESTION_UN_INSTALL_BY_PACKAGE_NAME,
-                isDirectCommand: false
+                isDirectCommand: false,
+                isShellPackageManagerCommand: false
             },
             {
                 name: TapperGeneralOptionsCommandsManager.QUESTION_REBOOT,
                 command: AndroidGeneralSettingsKey.Reboot,
                 inputQuestion: undefined,
-                isDirectCommand: true
+                isDirectCommand: true,
+                isShellPackageManagerCommand: false
+            },
+            {
+                name: TapperGeneralOptionsCommandsManager.QUESTION_REMOVE_PERMISSIONS,
+                command: AndroidGeneralSettingsKey.RemovePermissions,
+                inputQuestion: TapperGeneralOptionsCommandsManager.QUESTION_ADD_PACKAGE_NAME,
+                isDirectCommand: true,
+                isShellPackageManagerCommand: true
             }
         ];
     }

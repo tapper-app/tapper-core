@@ -90,7 +90,8 @@ export class TapperDeveloperOptionsCommandsManager {
                 name: "",
                 isDirectCommand: false,
                 inputQuestion: "",
-                command: command
+                command: command,
+                isShellPackageManagerCommand: false
             }, inputAnswer)
         }
     }
@@ -266,57 +267,68 @@ export class TapperDeveloperOptionsCommandsManager {
                 name: TapperDeveloperOptionsCommandsManager.QUESTION_TOGGLE_GPU_OVERDRAW,
                 command: AndroidSettingsKey.GPU_OVERDRAW,
                 inputQuestion: TapperDeveloperOptionsCommandsManager.QUESTION_ENABLED_DISABLED,
-                isDirectCommand: false
+                isDirectCommand: false,
+                isShellPackageManagerCommand: false
             },{
                 name: TapperDeveloperOptionsCommandsManager.QUESTION_TOGGLE_LAYOUT_BOUNDS,
                 command: AndroidSettingsKey.LAYOUT_BOUNDS,
                 inputQuestion: TapperDeveloperOptionsCommandsManager.QUESTION_ENABLED_DISABLED,
-                isDirectCommand: false
+                isDirectCommand: false,
+                isShellPackageManagerCommand: false
             },{
                 name: TapperDeveloperOptionsCommandsManager.QUESTION_TOGGLE_TOUCHES,
                 command: AndroidSettingsKey.SHOW_TOUCHES,
                 inputQuestion: TapperDeveloperOptionsCommandsManager.QUESTION_ENABLED_DISABLED,
-                isDirectCommand: false
+                isDirectCommand: false,
+                isShellPackageManagerCommand: false
             },{
                 name: TapperDeveloperOptionsCommandsManager.QUESTION_TOGGLE_POINTER_LOCATION,
                 command: AndroidSettingsKey.SHOW_POINTER_LOCATION,
                 inputQuestion: TapperDeveloperOptionsCommandsManager.QUESTION_ENABLED_DISABLED,
-                isDirectCommand: false
+                isDirectCommand: false,
+                isShellPackageManagerCommand: false
             },{
                 name: TapperDeveloperOptionsCommandsManager.QUESTION_TOGGLE_STRICT_MODE,
                 command: AndroidSettingsKey.STRICT_MODE,
                 inputQuestion: TapperDeveloperOptionsCommandsManager.QUESTION_ENABLED_DISABLED,
-                isDirectCommand: false
+                isDirectCommand: false,
+                isShellPackageManagerCommand: false
             },{
                 name: TapperDeveloperOptionsCommandsManager.QUESTION_CHANGE_GPU_VIEW_UPDATES,
                 command: AndroidSettingsKey.VIEW_UPDATES,
                 inputQuestion: TapperDeveloperOptionsCommandsManager.QUESTION_ENABLED_DISABLED,
-                isDirectCommand: false
+                isDirectCommand: false,
+                isShellPackageManagerCommand: false
             },{
                 name: TapperDeveloperOptionsCommandsManager.QUESTION_TOGGLE_DEVELOPER_OPTIONS,
                 command: AndroidSettingsKey.DEVELOPER_OPTIONS,
                 inputQuestion: TapperDeveloperOptionsCommandsManager.QUESTION_ENABLED_DISABLED,
-                isDirectCommand: false
+                isDirectCommand: false,
+                isShellPackageManagerCommand: false
             },{
                 name: TapperDeveloperOptionsCommandsManager.QUESTION_TOGGLE_USB_DEBUGGING,
                 command: AndroidSettingsKey.USB_DEBUGGING_V2,
                 inputQuestion: TapperDeveloperOptionsCommandsManager.QUESTION_ENABLED_DISABLED,
-                isDirectCommand: false
+                isDirectCommand: false,
+                isShellPackageManagerCommand: false
             },{
                 name: TapperDeveloperOptionsCommandsManager.QUESTION_TOGGLE_HARDWARE_ACCELERATION,
                 command: AndroidSettingsKey.HARDWARE_ACCELERATION,
                 inputQuestion: TapperDeveloperOptionsCommandsManager.QUESTION_ENABLED_DISABLED,
-                isDirectCommand: false
+                isDirectCommand: false,
+                isShellPackageManagerCommand: false
             },{
                 name: TapperDeveloperOptionsCommandsManager.QUESTION_TOGGLE_FORCE_RTL,
                 command: AndroidSettingsKey.FORCE_RTL,
                 inputQuestion: TapperDeveloperOptionsCommandsManager.QUESTION_ENABLED_DISABLED,
-                isDirectCommand: false
+                isDirectCommand: false,
+                isShellPackageManagerCommand: false
             },{
                 name: TapperDeveloperOptionsCommandsManager.QUESTION_CHANGE_GPU_RENDERING,
                 command: AndroidSettingsKey.GPU_RENDERING,
                 inputQuestion: TapperDeveloperOptionsCommandsManager.QUESTION_GPU_RENDERING_TYPE,
-                isDirectCommand: false
+                isDirectCommand: false,
+                isShellPackageManagerCommand: false
             },
         ];
     }

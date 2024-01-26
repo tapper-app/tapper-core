@@ -6,5 +6,6 @@ export enum AndroidGeneralSettingsKey {
     InstallApk = "install",
     UnInstallApk = "uninstall",
     Reboot = "reboot",
+    RemovePermissions = "reset-permissions",
     PowerSavingMode = "low_power"
 }

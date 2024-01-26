@@ -46,7 +46,8 @@ export class TapperTestingCommandsManager {
                 name: "",
                 isDirectCommand: false,
                 inputQuestion: "",
-                command: testingCommandToExecute
+                command: testingCommandToExecute,
+                isShellPackageManagerCommand: false
             }, inputAnswer)
         }
     }
@@ -146,25 +147,29 @@ export class TapperTestingCommandsManager {
                 name: TapperTestingCommandsManager.QUESTION_CLICK,
                 command: AndroidTestingOptionsType.CLICK,
                 inputQuestion: TapperTestingCommandsManager.QUESTION_COORDINATES,
-                isDirectCommand: false
+                isDirectCommand: false,
+                isShellPackageManagerCommand: false
             },
             {
                 name: TapperTestingCommandsManager.QUESTION_DOUBLE_CLICK,
                 command: AndroidTestingOptionsType.DOUBLE_CLICK,
                 inputQuestion: TapperTestingCommandsManager.QUESTION_COORDINATES,
-                isDirectCommand: false
+                isDirectCommand: false,
+                isShellPackageManagerCommand: false
             },
             {
                 name: TapperTestingCommandsManager.QUESTION_SCROLL_TO_BOTTOM,
                 command: AndroidTestingOptionsType.SCROLL_TO_BOTTOM,
                 inputQuestion: TapperTestingCommandsManager.QUESTION_DEVICE_HEIGHT,
-                isDirectCommand: false
+                isDirectCommand: false,
+                isShellPackageManagerCommand: false
             },
             {
                 name: TapperTestingCommandsManager.QUESTION_SCROLL_TO_TOP,
                 command: AndroidTestingOptionsType.SCROLL_TO_TOP,
                 inputQuestion: TapperTestingCommandsManager.QUESTION_DEVICE_HEIGHT,
-                isDirectCommand: false
+                isDirectCommand: false,
+                isShellPackageManagerCommand: false
             }
         ];
     }

@@ -41,6 +41,16 @@ export class TapperCommandQueryBuilder {
         return this;
     }
 
+    public setShellPm(): TapperCommandQueryBuilder {
+        this.queryString += " shell pm";
+        return this
+    }
+
+    public setPackageParam(): TapperCommandQueryBuilder {
+        this.queryString += " -p";
+        return this;
+    }
+
     public put(): TapperCommandQueryBuilder {
         this.queryString += " put";
         return this;

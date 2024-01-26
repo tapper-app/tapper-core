@@ -12,6 +12,7 @@ export class TapperCommandExecutionManager {
                 return
             }
 
+            console.log("Command To Execute: " + command)
             console.log(stdout)
         });
     }
