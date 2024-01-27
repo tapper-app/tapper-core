@@ -1,7 +1,19 @@
 import {DeviceInfoCommand} from "../models/device.info.command.js";
 import {TapperCommandExecutionManager} from "../utils/tapper.command.execution.manager.js";
 
+/**
+ * To Access the Device Info You Need to Execute the Commands in ADB One By One
+ * and The Names is not Helpful to Read in Terminal
+ * With This Manager Now We Can see A Helpful Names for The Attributes on Devices
+ *
+ * This manager Will Print in List The Important Attributes
+ * [Key]=[Value]
+ *
+ * No need to Use the Query Builder Here because No Input Inside these Queries
+ * All of them Just to get Info, No Submit Actions Required ...
+ */
 export class TapperDeviceInfoManager {
+
     public static onPrintDeviceInfoList() {
         for (let index = 0; index < this.getCommandsToShow().length; index++) {
             const commandInfo = this.getCommandsToShow()[index];

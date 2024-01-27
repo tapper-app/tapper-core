@@ -8,7 +8,14 @@ import { TapperInfo } from "./utils/tapper.info.js";
 import { TapperCommandsManager } from "./utils/tapper.commands.manager.js";
 import { TapperCommandsExecutionManager } from "./tapper.commands.execution.manager.js";
 
-
+/**
+ * This is the Main File for Tapper
+ * The Start Point in the Application
+ * Here We Print the Header Logs Always With the CLI Version
+ * After it, We See if the CLI Started Only or Started with an Attributes
+ * If the Cli Started without Arguments We Will Print a Dropdown Options of the Available Commands
+ * If the Cli Started With Args We Will Start Execution Directly
+ */
 // Start Tapper Initialization in Terminal
 console.log("==========================================================")
 console.log("===== Welcome To Tapper CLI")

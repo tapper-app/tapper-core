@@ -10,6 +10,12 @@ import {TapperDeviceInfoManager} from "./commands/tapper.device.info.manager.js"
 
 export class TapperCommandsExecutionManager {
 
+    /**
+     * Start the Commands Without Args
+     * 1. Start a Dropdown List
+     * 2. Show View Commands and Repeat the Dropdown List
+     * @param command
+     */
     public static onExecuteCommand(command: string) {
         if (command === TapperCommandsManager.VIEW_TESTING_OPTIONS_COMMAND) {
             this.onPrintOptions(TapperGeneralOptionsCommandsManager.getAvailableCommands());
@@ -65,6 +71,12 @@ export class TapperCommandsExecutionManager {
         }
     }
 
+    /**
+     * Here is the Started Point of Executing the Direct Commands
+     * In Case of Tapper Started With Args
+     * @param command Example -> execute-dev-options
+     * @param attributes Example -> overdraw / y -> Yes
+     */
     public static onExecuteCommandWithAttributes(command: string, attributes: Array<string>) {
         if (command === TapperCommandsManager.EXECUTE_AUTO_FLOW_TESTING_COMMAND) {
             this.onExecuteAutoTestingFlow();
@@ -97,6 +109,12 @@ export class TapperCommandsExecutionManager {
         }
     }
 
+    /**
+     * This use Tapper Testing Commands and Execute them in a Number That You Insert
+     * For Example You want to Submit a 5000 Action
+     * It Will be 5000 in a Random Locations in the Screen with Taps, Scrolls, Double Taps
+     * @private
+     */
     private static async onExecuteAutoTestingFlow() {
         const eventsCountAnswer = await TapperCommandsManager.onAskStringInputQuestion("How many Events you want To Execute on Your Device ?");
         const screenHeightAnswer = await TapperCommandsManager.onAskStringInputQuestion("What is the Screen Height of your Device (In Pixel) ?");
@@ -150,6 +168,11 @@ export class TapperCommandsExecutionManager {
         }
     }
 
+    /**
+     * Execute Random Commands Actions Using Native ADB Monkey Testing
+     * With the Number of Clicks
+     * @private
+     */
     private static async onExecuteNativeAndroidMonkeyTesting() {
         const packageNameQuestion = await TapperCommandsManager.onAskStringInputQuestion("Insert Your Application Package Name ?");
         const numberOfEventsCount = await TapperCommandsManager.onAskStringInputQuestion("Write how Many Events you want to Execute on your Application ?");

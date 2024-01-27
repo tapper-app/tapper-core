@@ -4,6 +4,22 @@ import {TapperCommandsManager} from "../utils/tapper.commands.manager.js";
 import {TapperCommandQueryBuilder} from "./tapper.command.query.builder.js";
 import {TapperCommandExecutionManager} from "../utils/tapper.command.execution.manager.js";
 
+/**
+ * This File is the Manager on General Options (Device Settings Category)
+ * Here you will see 2 Ways of Executing the Commands
+ * 1. By Picking the Options from CLI
+ * 2. Run the Commands Directly (Direct Command or Desktop App)
+ *
+ * The File Separated into 3 Components of the Variables
+ * 1. Question Content
+ * 2. Dropdown Title
+ * 3. Direct Command Key
+ *
+ * This Category Commands Should Always Support General Options Events Only
+ * 1. Device Events
+ * 2. Device Buttons
+ * 3. General Launcher Events
+ */
 export class TapperGeneralOptionsCommandsManager {
 
     // Sublist Questions
@@ -47,6 +63,16 @@ export class TapperGeneralOptionsCommandsManager {
     private static EXECUTE_SCREENSHOT = "screenshot";
     private static EXECUTE_OPEN_APP = "open-app";
 
+    /**
+     * Use This Command Only when You want to Execute the Command Directly from Outside CLI
+     * When you Run the CLI With Arguments Directly into this Category
+     * Or When you Use The Desktop App Version That Use this Function Directly With All Attributes
+     *
+     * Example
+     * @param attributes execute-general-options overdraw y
+     * Params Description
+     * [Category] [Option Key] [Answer]
+     */
     public static onExecuteCommandByAttributes(attributes: Array<string>) {
         let command: AndroidGeneralSettingsKey | null = null;
         let isDirectCommand = false;
@@ -132,6 +158,11 @@ export class TapperGeneralOptionsCommandsManager {
         }
     }
 
+    /**
+     * This Function is to Show The Commands List and Wait Until User Pick the Option
+     * After Picking the Option we See if the Command Has a Question to ASK
+     * Then Move to (onExecuteDeveloperCommandSubmissionQuestion)
+     */
     public static onExecuteGeneralOptionsCommands() {
         const questions = this.getCommandsQuestions();
         TapperCommandsManager.onAskCommandQuestions(questions)
@@ -143,6 +174,16 @@ export class TapperGeneralOptionsCommandsManager {
             .catch((error) => console.error(error))
     }
 
+    /**
+     * After Selecting the Command From the Dropdown Menu We have the Target Command to Run
+     * Now we Will see if the Command has an Input Value or Direct Command
+     * If it has an Input We Will ask that Question to have The Answer
+     * If not We Will execute this Command Directly
+     *
+     * After Picking Up The Question and Command Its Time to Execute The Command
+     * @param command
+     * @private
+     */
     private static onExecuteGeneralCommandSubmissionQuestion(command: CommandQuestionEntity<AndroidGeneralSettingsKey>) {
         if (command.inputQuestion) {
             const question = this.getQuestionNameByKey(command.inputQuestion)
@@ -176,6 +217,17 @@ export class TapperGeneralOptionsCommandsManager {
         }
     }
 
+    /**
+     * Now It's Time to Build the Command To Execute the Full Command
+     * This Function Use the TapperCommandQueryBuilder Which is the Base for Building the Commands
+     * Its Building the
+     * 1. General Commands
+     * 2. Package Manager Commands
+     * 3. Set Property Commands
+     *
+     * @param command The Target Command to Execute (Example -> Change Overdraw ?)
+     * @param inputOption The Answer of the Action (Example -> y == Yes, n == No)
+     */
     public static onExecuteCommand(command: CommandQuestionEntity<AndroidGeneralSettingsKey>, inputOption: string) {
         if (inputOption && command.inputQuestion && command.inputQuestion === TapperGeneralOptionsCommandsManager.QUESTION_ENABLED_DISABLED) {
             if (inputOption.toLowerCase() !== "y" && inputOption.toLowerCase() !== "n") {
@@ -240,6 +292,11 @@ export class TapperGeneralOptionsCommandsManager {
         }
     }
 
+    /**
+     * Used In CLI Options Only, Its Displaying the List of Options
+     * When you Pick this Category
+     * @private
+     */
     private static getCommandsQuestions(): Array<CommandQuestionEntity<AndroidGeneralSettingsKey>> {
         return [
             {

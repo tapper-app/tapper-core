@@ -2,6 +2,10 @@ import { exec } from 'child_process';
 import {TapperDeviceInfoManager} from "../commands/tapper.device.info.manager.js";
 import {DeviceInfoCommand} from "../models/device.info.command.js";
 
+/**
+ * Any Shell Command Should be Executed Here In This File
+ * Helpful in Debug, if you want to See Which Query Submitted and How Add a breakpoint Here
+ */
 export class TapperCommandExecutionManager {
 
     // @ts-ignore

@@ -2,6 +2,20 @@ import { AndroidSettingsKey } from "../models/android.settings.key.js";
 import {AndroidGeneralSettingsKey} from "../models/android.general.settings.key.js";
 import {AndroidTestingOptionsType} from "../models/android.testing.options.type.js";
 
+/**
+ * Tapper Command Builder Code
+ * This Builder Built Like This Because The Best Approach of Generating Commands in Tapper
+ * is to Do it Dynamically because not all commands has the Same Structure or Order of Params
+ * For This Case To This Builder Build the Commands by Fragments
+ *
+ * How To Use This Builder ?
+ * new TapperCommandQueryBuilder()
+ *  .setShellPm()
+ *  .setGeneralSettingsKey(command.command)
+ *  .setPackageParam()
+ *  .setCustomValue(inputOption)
+ *  .getQuery()
+ */
 export class TapperCommandQueryBuilder {
 
     private queryString = "adb";

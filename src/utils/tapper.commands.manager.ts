@@ -7,9 +7,17 @@ import {AndroidGeneralSettingsKey} from "../models/android.general.settings.key.
 import {AndroidSettingsKey} from "../models/android.settings.key.js";
 import {AndroidTestingOptionsType} from "../models/android.testing.options.type.js";
 
+/**
+ * This File has the Questions and Commands, Validations to Execute
+ * Any Dropdown, Question, Validation on Input Should be in this File
+ */
 export class TapperCommandsManager {
 
     // View Commands
+    /**
+     * This Section is the Main Section for Direct Commands Outside CLI
+     * If you want To Execute The CLI With a Direct Command Use These Options
+     */
     public static VIEW_DEVELOPER_OPTIONS_COMMAND = "developer-options-view";
     public static VIEW_TESTING_OPTIONS_COMMAND = "testing-options-view";
     public static VIEW_DEVICE_INFO = "view-device-info";
@@ -17,6 +25,10 @@ export class TapperCommandsManager {
     public static HELP_COMMAND = "help";
 
     // Execution Commands
+    /**
+     * This Section is the Main Section for Direct Commands Outside CLI
+     * If you want To Execute The CLI With a Direct Command Use These Options
+     */
     public static EXECUTE_DEVELOPER_OPTION_COMMAND = "execute-dev-option";
     public static EXECUTE_GENERAL_OPTIONS_COMMAND = "execute-general-options";
     public static EXECUTE_TESTING_EVENTS_COMMAND = "execute-testing-events";
