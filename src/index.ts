@@ -75,7 +75,6 @@ for (let optionIndex = 0; optionIndex < cliOptions.length; optionIndex++) {
  * @param options - Some Commands has Options and Arguments, Need to Pass them to Command Parser
  */
 function onCommandClick(command: string, options: any) {
-    console.log("Command: " + command)
     switch (command) {
         case TapperCommandsManager.HELP_COMMAND:
             TapperCommandsExecutionManager.onExecuteCommand(TapperCommandsManager.HELP_COMMAND);
@@ -137,9 +136,6 @@ if (isCliStartedWithArguments) {
     } else {
         executionKey = argumentsToValidate[argumentsToValidate.length - 3]
     }
-
-    console.log("Execute: " + argumentsToValidate)
-    console.log("Execute: " + executionKey)
     onCommandClick(executionKey ?? "", argumentsToValidate);
 } else {
     onStartDropDownOptionsList();
