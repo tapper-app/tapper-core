@@ -174,8 +174,18 @@ export class TapperDeveloperOptionsCommandsManager {
      * @param inputOption The Answer of the Action (Example -> y == Yes, n == No)
      */
     public static onExecuteCommand(command: CommandQuestionEntity<AndroidSettingsKey>, inputOption: string) {
+        const isYesAnswer = inputOption.toLowerCase().includes('y')
         const commandToExecute = new TapperCommandQueryBuilder()
             .setShellCommand()
+
+        if (command.command == AndroidSettingsKey.GPU_OVERDRAW) {
+            if (isYesAnswer) {
+                TapperCommandExecutionManager.onExecuteCommandString("adb shell setprop debug.hwui.overdraw show");
+            } else {
+                TapperCommandExecutionManager.onExecuteCommandString("adb shell setprop debug.hwui.overdraw false");
+            }
+            return
+        }
 
         if (this.isSetPropAttribute(command.command)) {
             commandToExecute.setProp().setSystemSettingsKey(command.command)
@@ -204,7 +214,6 @@ export class TapperDeveloperOptionsCommandsManager {
                 commandToExecute.setCustomValue("skiavk")
             }
         } else {
-            const isYesAnswer = inputOption.toLowerCase().includes('y')
             if (this.isNumberAttribute(command.command)) {
                 if (isYesAnswer) {
                     commandToExecute.setEnabledByNumbers(true)
