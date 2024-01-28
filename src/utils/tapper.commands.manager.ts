@@ -18,9 +18,9 @@ export class TapperCommandsManager {
      * This Section is the Main Section for Direct Commands Outside CLI
      * If you want To Execute The CLI With a Direct Command Use These Options
      */
-    public static VIEW_DEVELOPER_OPTIONS_COMMAND = "developer-options-view";
-    public static VIEW_TESTING_OPTIONS_COMMAND = "testing-options-view";
-    public static VIEW_DEVICE_INFO = "view-device-info";
+    public static VIEW_DEVELOPER_OPTIONS_COMMAND = "developer-options-execute";
+    public static VIEW_TESTING_OPTIONS_COMMAND = "testing-options-execute";
+    public static VIEW_DEVICE_INFO = "view-device-execute";
     public static VALIDATE_ADB_INSTALLATION_COMMAND = "adb-validate";
     public static HELP_COMMAND = "help";
 

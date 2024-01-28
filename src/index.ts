@@ -130,13 +130,21 @@ async function onStartDropDownOptionsList() {
 const isCliStartedWithArguments = process.argv != undefined && process.argv.length > 2
 if (isCliStartedWithArguments) {
     const argumentsToValidate = process.argv;
+    const cliArguments: string[] = [];
     let executionKey: string | undefined = "";
-    if (argumentsToValidate.length == 3) {
-        executionKey = argumentsToValidate[argumentsToValidate.length - 1]
-    } else {
-        executionKey = argumentsToValidate[argumentsToValidate.length - 3]
+    let isCommandValidToAdd = false;
+    for (let i = 0; i < argumentsToValidate.length; i++) {
+        const valueToCheck = argumentsToValidate[i] as string
+        if (valueToCheck.includes("execute")) {
+            isCommandValidToAdd = true;
+            executionKey = valueToCheck;
+            cliArguments.push(valueToCheck)
+        } else if (isCommandValidToAdd) {
+            cliArguments.push(valueToCheck)
+        }
     }
-    onCommandClick(executionKey ?? "", argumentsToValidate);
+
+    onCommandClick(executionKey ?? "", cliArguments);
 } else {
     onStartDropDownOptionsList();
 }
